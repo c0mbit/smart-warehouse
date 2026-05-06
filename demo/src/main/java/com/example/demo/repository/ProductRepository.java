@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    // Spring сам поймет этот метод и сделает поиск по артикулу (SKU)!
     Product findBySku(String sku);
 }

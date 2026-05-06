@@ -16,7 +16,6 @@ public class InventoryController {
         this.inventoryService = inventoryService;
     }
 
-    // Эндпоинт для приемки товара
     @PostMapping("/receive")
     public Inventory receiveGoods(@RequestBody ReceiveGoodsRequest request) {
         return inventoryService.receiveGoods(request);

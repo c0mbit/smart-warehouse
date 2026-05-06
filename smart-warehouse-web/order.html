@@ -15,7 +15,6 @@
         <h2 class="mb-4">Create New Order</h2>
         
         <div class="row">
-            <!-- Форма добавления товара -->
             <div class="col-md-5">
                 <div class="card bg-secondary text-white shadow-sm mb-4">
                     <div class="card-body">
@@ -23,7 +22,6 @@
                         <form id="addItemForm">
                             <div class="mb-3">
                                 <label for="productSelect" class="form-label">Select Product</label>
-                                <!-- Сюда JS загрузит товары из базы данных -->
                                 <select class="form-select" id="productSelect" required>
                                     <option value="" disabled selected>Loading products...</option>
                                 </select>
@@ -38,7 +36,6 @@
                 </div>
             </div>
 
-            <!-- Корзина -->
             <div class="col-md-7">
                 <div class="card bg-dark border border-secondary text-white shadow-sm">
                     <div class="card-body">
@@ -52,7 +49,6 @@
                                 </tr>
                             </thead>
                             <tbody id="cartTableBody">
-                                <!-- Сюда JS будет добавлять выбранные товары -->
                             </tbody>
                         </table>
                         <button id="submitOrderBtn" class="btn btn-primary mt-3 w-100" disabled>Submit Order to Warehouse</button>

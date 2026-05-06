@@ -7,6 +7,5 @@ import java.util.List;
 
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
-    // Найти все остатки конкретного товара
     List<Inventory> findByProductId(Long productId);
 }

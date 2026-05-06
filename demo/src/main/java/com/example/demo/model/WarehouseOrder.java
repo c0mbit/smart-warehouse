@@ -14,13 +14,13 @@ public class WarehouseOrder {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String orderNumber; // Уникальный номер заказа (например, "ORD-1001")
+    private String orderNumber;
 
-    private String status; // Статус (например: "NEW", "PICKING", "SHIPPED")
+    private String status;
 
-    private LocalDateTime createdAt; // Время создания
+    private LocalDateTime createdAt;
 
-    @PrePersist // Spring сам подставит текущее время перед сохранением в базу
+    @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }

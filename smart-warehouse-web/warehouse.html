@@ -8,8 +8,6 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-
-    <!-- Навигация -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.html">Smart Warehouse AI</a>
@@ -22,28 +20,20 @@
             </div>
         </div>
     </nav>
-
-    <!-- Основной контент -->
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>AI Slotting Optimization</h2>
             <button id="runAiBtn" class="btn btn-primary btn-lg px-4">Run AI Analysis</button>
         </div>
-
-        <!-- Текстовое описание от ИИ (скрыто до нажатия кнопки) -->
         <div id="summarySection" class="summary-box mb-4 d-none">
             <h5 class="text-primary mb-2">⚡ AI Report</h5>
             <p id="summaryText" class="mb-0 fs-5 text-light"></p>
         </div>
-
-        <!-- Сетка склада на 20 ячеек -->
         <div class="rack-grid" id="rackGrid">
-            <!-- Сюда с помощью JavaScript будут вставлены 20 квадратиков -->
         </div>
     </div>
 
     <script>
-        // Функция для первичной отрисовки пустых ячеек
         function drawEmptyGrid() {
             const grid = document.getElementById('rackGrid');
             grid.innerHTML = '';
@@ -57,31 +47,25 @@
             }
         }
 
-        // Запуск при загрузке страницы
         document.addEventListener('DOMContentLoaded', drawEmptyGrid);
 
-        // Обработка нажатия на кнопку "Run AI"
         document.getElementById('runAiBtn').addEventListener('click', async () => {
             const btn = document.getElementById('runAiBtn');
             btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Analyzing...';
             btn.disabled = true;
 
             try {
-                // Обращаемся к нашему Python ИИ
                 const response = await fetch('http://localhost:8000/api/ai/optimize-layout');
                 const data = await response.json();
 
                 if(data.status === 'success') {
-                    // 1. Показываем текст с объяснением
                     document.getElementById('summarySection').classList.remove('d-none');
                     document.getElementById('summaryText').innerText = data.summary;
 
-                    // 2. Перерисовываем квадратики с новыми товарами
                     const grid = document.getElementById('rackGrid');
                     grid.innerHTML = '';
                     
                     data.layout.forEach(slot => {
-                        // Если товар поставлен в пару ИИ, делаем квадратик зеленоватым
                         const pairClass = slot.is_pair ? 'ai-paired' : '';
                         const textClass = slot.product === 'Empty' ? 'text-muted' : '';
 
@@ -107,7 +91,6 @@
     
     <div id="footer-placeholder"></div>
 
-    <!-- Скрипт для подгрузки компонентов -->
     <script src="js/components.js"></script>
 </body>
 </html>

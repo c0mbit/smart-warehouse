@@ -7,6 +7,5 @@ import java.util.List;
 
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
-    // Метод, чтобы найти все позиции конкретного заказа
     List<OrderItem> findByOrderId(Long orderId);
 }

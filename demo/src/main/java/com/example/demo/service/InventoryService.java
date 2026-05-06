@@ -9,7 +9,7 @@ import com.example.demo.repository.LocationRepository;
 import com.example.demo.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
-@Service // Говорим Spring, что это класс с бизнес-логикой
+@Service
 public class InventoryService {
 
     private final InventoryRepository inventoryRepository;
@@ -22,23 +22,18 @@ public class InventoryService {
         this.locationRepository = locationRepository;
     }
 
-    // Метод приемки товара на склад
     public Inventory receiveGoods(ReceiveGoodsRequest request) {
-        // 1. Ищем товар в базе
         Product product = productRepository.findById(request.getProductId())
-                .orElseThrow(() -> new RuntimeException("Товар не найден!"));
+                .orElseThrow(() -> new RuntimeException("Product not found!"));
 
-        // 2. Ищем ячейку в базе
         Location location = locationRepository.findById(request.getLocationId())
-                .orElseThrow(() -> new RuntimeException("Ячейка не найдена!"));
+                .orElseThrow(() -> new RuntimeException("Location not found!"));
 
-        // 3. Создаем запись об остатках (связываем их)
         Inventory inventory = new Inventory();
         inventory.setProduct(product);
         inventory.setLocation(location);
         inventory.setQuantity(request.getQuantity());
 
-        // 4. Сохраняем в базу
         return inventoryRepository.save(inventory);
     }
 }

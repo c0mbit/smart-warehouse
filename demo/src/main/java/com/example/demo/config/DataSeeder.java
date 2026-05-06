@@ -18,7 +18,6 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Проверяем, пустая ли база. Если товаров меньше 5, добавляем наш каталог.
         if (productRepository.count() < 5) {
             System.out.println("Database Initialization: Adding Starter Products...");
 

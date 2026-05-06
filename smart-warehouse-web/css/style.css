@@ -20,7 +20,7 @@
             align-items: center;
         }
         .rack-box.ai-paired {
-            background-color: #2b4c3b; /* Приятный зеленоватый оттенок для оптимизированных пар */
+            background-color: #2b4c3b;
             border-color: #4CAF50;
         }
         .rack-title { font-size: 0.85rem; color: #8b8b9b; margin-bottom: 5px; }

@@ -13,17 +13,15 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Связь: Многие позиции принадлежат одному заказу
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    @JsonIgnore // Чтобы при выдаче JSON не было бесконечного зацикливания
+    @JsonIgnore
     private WarehouseOrder order;
 
-    // Связь: Какая позиция ссылается на какой товар
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Column(nullable = false)
-    private Integer quantity; // Сколько штук этого товара нужно
+    private Integer quantity;
 }
