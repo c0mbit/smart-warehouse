@@ -59,15 +59,3 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
 });
-
-function highlightGrid(index) {
-    document.querySelectorAll(".grid-cell").forEach(cell => {
-        cell.classList.remove("highlight-target", "highlight-adjacent");
-    });
-
-    const cellA = (index * 3) % 19 + 1; 
-    let cellB = cellA + 1;
-    
-    document.getElementById(`cell-${cellA}`).classList.add("highlight-target");
-    document.getElementById(`cell-${cellB}`).classList.add("highlight-adjacent");
-}

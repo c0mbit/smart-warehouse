@@ -24,18 +24,16 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
-    @Transactional // Гарантирует целостность базы данных
+    @Transactional
     public WarehouseOrder createOrder(CreateOrderRequest request) {
-        // 1. Создаем шапку заказа
         WarehouseOrder order = new WarehouseOrder();
         order.setOrderNumber(request.getOrderNumber());
         order.setStatus("NEW");
         WarehouseOrder savedOrder = orderRepository.save(order);
 
-        // 2. Проходимся по списку товаров и привязываем их к заказу
         for (OrderItemDto itemDto : request.getItems()) {
             Product product = productRepository.findById(itemDto.getProductId())
-                    .orElseThrow(() -> new RuntimeException("Товар с ID " + itemDto.getProductId() + " не найден!"));
+                    .orElseThrow(() -> new RuntimeException("Product with ID " + itemDto.getProductId() + " not found!"));
 
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(savedOrder);
@@ -46,5 +44,9 @@ public class OrderService {
         }
 
         return savedOrder;
+    }
+
+    public void deleteAllOrders() {
+        orderRepository.truncateAllOrders();
     }
 }

@@ -24,7 +24,10 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>AI Slotting Optimization</h2>
-            <button id="runAiBtn" class="btn btn-primary btn-lg px-4">Run AI Analysis</button>
+            <div>
+                <button id="clearGridBtn" class="btn btn-outline-danger btn-lg px-4 me-2">Clear Warehouse</button>
+                <button id="runAiBtn" class="btn btn-primary btn-lg px-4">Run AI Analysis</button>
+            </div>
         </div>
         <div id="summarySection" class="summary-box mb-4 d-none">
             <h5 class="text-primary mb-2">⚡ AI Report</h5>
@@ -85,6 +88,49 @@
                 alert("Failed to connect to AI service. Please make sure it's running.");
             } finally {
                 btn.innerHTML = 'Run AI Analysis';
+                btn.disabled = false;
+            }
+        });
+
+        function highlightGrid(index) {
+    document.querySelectorAll(".grid-cell").forEach(cell => {
+        cell.classList.remove("highlight-target", "highlight-adjacent");
+    });
+
+    const cellA = (index * 3) % 19 + 1; 
+    let cellB = cellA + 1;
+    
+    document.getElementById(`cell-${cellA}`).classList.add("highlight-target");
+    document.getElementById(`cell-${cellB}`).classList.add("highlight-adjacent");
+}
+
+        document.getElementById('clearGridBtn').addEventListener('click', async () => {
+            const isConfirmed = confirm("Are you sure you want to delete your entire order history from the database? The items will remain, but your purchase history will be erased.");
+            
+            if (!isConfirmed) return;
+
+            const btn = document.getElementById('clearGridBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Clearing DB...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('http://localhost:8080/api/orders/reset', {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    drawEmptyGrid(); 
+                    document.getElementById('summarySection').classList.add('d-none'); 
+                    alert("✅ Database cleared successfully! Order history is empty.");
+                } else {
+                    alert("❌ Error occurred while clearing the database.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("❌ Failed to connect to the Java server.");
+            } finally {
+                btn.innerHTML = originalText;
                 btn.disabled = false;
             }
         });

@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface WarehouseOrderRepository extends JpaRepository<WarehouseOrder, Long> {
+public interface OrderRepository extends JpaRepository<WarehouseOrder, Long> {
 
+    // Добавляем вот этот блок:
     @Modifying
     @Transactional
     @Query(value = "TRUNCATE TABLE order_items, warehouse_orders CASCADE", nativeQuery = true)

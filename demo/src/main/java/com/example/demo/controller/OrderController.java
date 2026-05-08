@@ -20,4 +20,9 @@ public class OrderController {
     public WarehouseOrder createOrder(@RequestBody CreateOrderRequest request) {
         return orderService.createOrder(request);
     }
+
+    @DeleteMapping("/reset")
+    public void deleteAllOrders() {
+        orderService.deleteAllOrders();
+    }
 }
