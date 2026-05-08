@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const productSelect = document.getElementById('productSelect');
 
     try {
-        const response = await fetch('http://localhost:8080/api/products');
+        const response = await fetch('https://smart-warehouse-java.onrender.com/api/products');
         if (!response.ok) throw new Error("Network response was not ok");
         const products = await response.json();
 
@@ -56,6 +56,7 @@ function updateCartUI() {
     const submitBtn = document.getElementById('submitOrderBtn');
     submitBtn.disabled = cart.length === 0;
 }
+
 document.getElementById('submitOrderBtn').addEventListener('click', async () => {
     if (cart.length === 0) return;
 
@@ -70,7 +71,7 @@ document.getElementById('submitOrderBtn').addEventListener('click', async () => 
     };
 
     try {
-        const response = await fetch('http://localhost:8080/api/orders', {
+        const response = await fetch('https://smart-warehouse-java.onrender.com/api/orders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
