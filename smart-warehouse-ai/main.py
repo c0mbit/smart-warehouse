@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware # Добавили импорт
+from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 import pandas as pd
 import numpy as np
@@ -14,13 +14,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DB_PARAMS = {
-    "dbname": "smart_warehouse",
-    "user": "postgres",
-    "password": "2605",
-    "host": "localhost",
-    "port": "5432"
-}
+DATABASE_URL = "postgresql://neondb_owner:npg_lZ3WKYv2cEVn@ep-lucky-wave-alo42owa.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require"
 
 @app.get("/")
 def read_root():
@@ -29,7 +23,8 @@ def read_root():
 @app.get("/api/ai/recommend-placement")
 def get_placement_recommendations():
     try:
-        conn = psycopg2.connect(**DB_PARAMS)
+        # Подключаемся по новой ссылке
+        conn = psycopg2.connect(DATABASE_URL)
         
         query = """
         SELECT o.order_number, p.name as product_name
@@ -70,7 +65,8 @@ def get_placement_recommendations():
 @app.get("/api/ai/optimize-layout")
 def get_optimized_layout():
     try:
-        conn = psycopg2.connect(**DB_PARAMS)
+        # Подключаемся по новой ссылке
+        conn = psycopg2.connect(DATABASE_URL)
         
         query = """
         SELECT o.order_number, p.name as product_name
