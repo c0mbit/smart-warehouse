@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 import pandas as pd
 import numpy as np
+import os
 
 app = FastAPI()
 
@@ -14,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATABASE_URL = "postgresql://neondb_owner:npg_lZ3WKYv2cEVn@ep-lucky-wave-alo42owa.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 @app.get("/")
 def read_root():
